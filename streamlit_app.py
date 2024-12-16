@@ -35,6 +35,16 @@ try:
         title="Top 10 Decks and Other by Win Percentage",
         hole=0.3  # Makes it a donut chart; set to 0 for a full pie chart
     )
+
+    fig.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="top",
+        y=-0.2,  # Adjust this value to fine-tune vertical position
+        xanchor="center",
+        x=0.5
+        )
+    )
     
     # Display the Plotly pie chart in Streamlit
     st.plotly_chart(fig)
