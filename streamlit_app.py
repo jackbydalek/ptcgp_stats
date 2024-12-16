@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
 
-# Streamlit app
+# Streamlit app title
 st.title("Top 10 Pokémon TCG Decks by Win Percentage")
 
 # URL of the Google Sheet (use CSV export link for simplicity)
@@ -20,15 +20,16 @@ try:
     # Sort data by win percentage and get top 10 decks
     top_decks = data.sort_values(by="Win %", ascending=False).head(10)
     
-    # Create pie chart
-    fig, ax = plt.subplots()
-    ax.pie(
-        top_decks["Win %"],
-        labels=top_decks["Deck Name"],
-        autopct="%1.1f%%",
-        startangle=90
+    # Create a pie chart using Plotly
+    fig = px.pie(
+        top_decks,
+        values="Win %",
+        names="Deck Name",
+        title="Top 10 Decks by Win Percentage",
+        hole=0.3  # Makes it a donut chart; set to 0 for a full pie chart
     )
-    ax.axis("equal")  # Equal aspect ratio ensures the pie chart is circular.
-    st.pyplot(fig)
+    
+    # Display the Plotly pie chart in Streamlit
+    st.plotly_chart(fig)
 except Exception as e:
     st.error(f"An error occurred: {e}")
